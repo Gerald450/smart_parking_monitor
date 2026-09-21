@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Parkline — Smart Parking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Public+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css?v=5" />
+  </head>
+  <body>
+    <div class="page-glow" aria-hidden="true"></div>
+
+    <header class="top-bar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">P</span>
+        <div class="brand-copy">
+          <p class="brand-name">Parkline</p>
+          <p class="brand-sub">Smart parking monitor</p>
+        </div>
+      </div>
+
+      <div class="status-cluster">
+        <p id="clock" class="clock" aria-live="polite">--:--:--</p>
+        <p id="live-pill" class="pill waiting">Waiting</p>
+      </div>
+    </header>
+
+    <main>
+      <section id="setup-view" class="panel setup hidden" hidden>
+        <div class="setup-copy">
+          <p class="eyebrow">Lot setup</p>
+          <h1 id="setup-title">Find the parking stalls</h1>
+          <p id="setup-help" class="lede">
+            Parkline can scan the lot photo for painted stall rows. Or draw one
+            typical space yourself, then box each row.
+          </p>
+          <ol class="steps" id="setup-steps">
+            <li class="is-active">Find stalls</li>
+            <li>Each row</li>
+          <li>Edit</li>
+          </ol>
+        </div>
+
+        <div class="lot-card">
+          <div class="lot-stage" id="setup-stage">
+            <canvas id="setup-canvas" aria-label="Parking lot setup canvas"></canvas>
+            <p id="draw-hint" class="draw-hint">Click and drag to draw</p>
+          </div>
+          <div class="setup-actions">
+            <button id="auto-btn" class="solid" type="button">Auto-detect stalls</button>
+            <button id="delete-btn" class="ghost" type="button" hidden>Delete stall</button>
+            <button id="undo-btn" class="ghost" type="button">Undo last row</button>
+            <button id="back-btn" class="ghost" type="button">Back</button>
+            <button id="next-btn" class="ghost" type="button">Next</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="live-view" class="live-layout hidden" hidden>
+        <article class="lot-card live-lot">
+          <div class="lot-heading">
+            <h2>Live lot</h2>
+            <p id="updated-at">Waiting for the first scan</p>
+          </div>
+          <div class="lot-stage" id="live-stage">
+            <img id="lot-image" alt="Live view of the parking lot" />
+            <svg id="lot-overlay" viewBox="0 0 1100 720" role="img" aria-label="Parking stall overlay"></svg>
+          </div>
+        </article>
+
+        <aside class="board-card">
+          <div class="meter">
+            <div>
+              <p class="eyebrow">Open now</p>
+              <p class="count">
+                <span id="available-count">0</span>
+                <span class="count-slash">/</span>
+                <span id="total-count">0</span>
+              </p>
+              <p id="suggestion" class="suggestion">Scanning stalls…</p>
+            </div>
+            <svg class="ring" viewBox="0 0 96 96" aria-hidden="true">
+              <circle class="ring-track" cx="48" cy="48" r="40"></circle>
+              <circle id="ring-fill" class="ring-fill" cx="48" cy="48" r="40"></circle>
+            </svg>
+          </div>
+
+          <div class="board-toolbar">
+            <p class="eyebrow">Stall board</p>
+            <div class="filters" role="tablist" aria-label="Filter stalls">
+              <button class="filter is-active" data-filter="all" type="button">All</button>
+              <button class="filter" data-filter="Open" type="button">Open</button>
+              <button class="filter" data-filter="Occupied" type="button">Taken</button>
+            </div>
+          </div>
+
+          <ul id="stall-board" class="stall-board" aria-live="polite"></ul>
+
+          <button id="edit-live-btn" class="text-btn" type="button">
+            Edit stalls
+          </button>
+          <button id="auto-live-btn" class="text-btn" type="button">
+            Auto-detect stalls
+          </button>
+          <button id="reset-btn" class="text-btn" type="button">
+            Recalibrate lot
+          </button>
+        </aside>
+      </section>
+    </main>
+
+    <script src="/app.js?v=5"></script>
+  </body>
+</html>
